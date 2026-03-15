@@ -28,9 +28,33 @@ python setup.py develop --no_cuda_ext
 
 Download the pretrained weights from [google drive](https://drive.google.com/drive/folders/1RmpdphmhG3GT9ZCPmBnzWCzNnD9Kxlaq?usp=drive_link) and put it in '**models**' folder
 
-## To run the code
+## Train
+
+### Dataset structure
+```
+|----- sample1
+|     |------ sample1_before.jpg  (Refence Before Editing)
+|     |------ sample1_after.jpg     (Refence After Editing)
+|     |______ sample1_input.jpg     (Input to be Edited)
+|
+|----- ......
+|
+|-----  sample#
+|     |------ sample#_before.jpg  (Refence Before Editing)
+|     |------ sample#_after.jpg     (Refence After Editing)
+|     |______ sample#_input.jpg     (Input to be Edited)
+|
+|----- ......
+|
+|____ sampleN
+      |------ sampleN_before.jpg  (Refence Before Editing)
+      |------ sampleN_after.jpg     (Refence After Editing)
+      |______ sampleN_input.jpg     (Input to be Edited)
+```
+
+### Run this code
 ```bash
 chmod +x run_all_samples.sh
 ./train_data.sh
 ```
-Change the folder path in run_all_samples.sh file
+Change the folder path in train_data.sh file (In train_data.sh file DATA_ROOT = "ADD YOUR PATH HERE")
