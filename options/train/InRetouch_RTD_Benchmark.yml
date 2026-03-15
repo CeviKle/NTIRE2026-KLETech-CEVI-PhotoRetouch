@@ -1,0 +1,95 @@
+# general settings
+name: InRetouch_RTD_Benchmark
+model_type: CNNINRSplitWindModel
+scale: 1
+num_gpu: 1
+manual_seed: 42
+
+datasets:
+  train:
+    name: INR_Train
+    type: RTD_Benchmark
+    style_natural: datasets/Retouch_Transfer_Dataset/Benchmark/Test_References/natural
+    style_output: datasets/Retouch_Transfer_Dataset/Benchmark/Test_References/Presets
+    inp_natural: datasets/Retouch_Transfer_Dataset/Benchmark/Test/natural
+    input_gt: datasets/Retouch_Transfer_Dataset/Benchmark/Test/Presets
+    refs_file: datasets/photo_style_transfer/Benchmark/refs.txt
+    sample_rate: 1
+    window_size: 12
+
+    Windows_batch_size: 484
+    
+    io_backend:
+      type: disk
+
+network_g:
+  type: CNNDWSplitSiren
+  n_input_p: 2
+  n_input_s: 3
+  n_output_dims: 3
+  sin_w: 1
+  n_neurons: 64
+  n_hidden_p: 1
+  n_hidden_s: 1
+  n_hidden_m: 1
+  use_skip: true
+  
+# path
+path:
+  pretrain_network_g: ~
+  strict_load_g: true
+  resume_state: ~
+
+# training settings
+train:
+  optim_g:
+    type: AdamW
+    lr: !!float 1e-2
+    weight_decay: [0.1, 0.0001,  0.001]
+    betas: [0.9, 0.9]
+    
+  scheduler:
+    type: TrueCosineAnnealingLR
+    T_max: 1000
+    eta_min: !!float 1e-4
+
+  total_iter: 1000
+  warmup_iter: -1 # no warm up
+
+  # losses
+  pixel_opt:
+    type: L1Loss
+    loss_weight: 1
+    reduction: mean
+
+
+  resume_train: false
+
+# validation settings
+val:
+  val_freq: !!float 1e4
+  save_img: true
+
+  metrics:
+    psnr: # metric name, can be arbitrary
+      type: calculate_psnr
+      crop_border: 0
+      test_y_channel: false
+    ssim:
+      type: calculate_ssim
+      crop_border: 0
+      test_y_channel: false
+
+# logging settings
+logger:
+  print_freq: 200
+  save_checkpoint: true
+  use_tb_logger: false
+  wandb:
+    project: ~
+    resume_id: ~
+
+# dist training settings
+dist_params:
+  backend: nccl
+  port: 29500

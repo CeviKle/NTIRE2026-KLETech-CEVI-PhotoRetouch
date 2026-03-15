@@ -1,0 +1,37 @@
+# general settings
+name: testVideo-InRetouch
+model_type: CNNINRSplitWindModel
+scale: 1
+num_gpu: 1 # set num_gpu: 0 for cpu mode
+manual_seed: 42
+
+video_inference: "/media/DATA/Research/photo_style_transfer/video_clips/12524535_720_1280_30fps.mp4"
+
+network_g:
+  type: CNNDWSplitSiren
+  n_input_p: 2
+  n_input_s: 3
+  n_output_dims: 3
+  sin_w: 1
+  n_neurons: 64
+  n_hidden_p: 1
+  n_hidden_s: 1
+  n_hidden_m: 1
+  use_skip: true
+
+
+# path
+path:
+  pretrain_network_g: experiments/InRetouch/models/INR_Preset_1001.pth
+  strict_load_g: true
+  resume_state: ~
+
+# validation settings
+val:
+  save_img: false
+
+
+# dist training settings
+dist_params:
+  backend: nccl
+  port: 29500

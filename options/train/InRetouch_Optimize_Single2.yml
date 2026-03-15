@@ -1,0 +1,99 @@
+#psnr score : 21.31
+# general settings
+name: InRetouch
+model_type: CNNINRSplitWindModel
+scale: 1
+num_gpu: 1
+manual_seed: 42
+
+datasets:
+  train:
+    name: INR_Train
+    type: INRTrainDataset
+    style_natural: ['example_data/Example1_Before.jpg']
+    style_output: ['example_data/Example1_After.jpg']
+    sample_rate: 1
+
+    # Larger window improves SSIM & LPIPS
+    window_size: 16
+    Windows_batch_size: 768
+    
+    io_backend:
+      type: disk
+
+  val:
+    name: INR_Inference
+    type: INRInferenceDataset
+    inp_natural: "example_data/Inference_Data"
+    io_backend:
+      type: disk
+
+network_g:
+  type: CNNDWSplitSiren
+
+  n_input_p: 2
+  n_input_s: 3
+  n_output_dims: 3
+  sin_w: 1
+
+  # Balanced capacity (stronger than baseline, runtime-safe)
+  n_neurons: 96
+  n_hidden_p: 2
+  n_hidden_s: 2
+  n_hidden_m: 2
+
+  use_skip: true
+  
+# path
+path:
+  pretrain_network_g: ~
+  strict_load_g: true
+  resume_state: ~
+
+# training settings
+train:
+  optim_g:
+    type: AdamW
+    lr: 0.0005
+    weight_decay: [0.01, 0.0001, 0.001]
+    betas: [0.9, 0.9]
+    
+  scheduler:
+    type: TrueCosineAnnealingLR
+    T_max: 5000
+    eta_min: !!float 1e-5
+
+  # Balanced runtime vs convergence
+  total_iter: 5000
+  warmup_iter: -1
+
+  # PSNR-driven but LPIPS-aware loss
+  pixel_opt:
+    type: MSELoss
+    loss_weight: 1
+    reduction: mean
+
+  # Small perceptual pressure (improves LPIPS, minimal PSNR drop)
+  vgg_weight: 0.5
+  color_weight: 0.5
+
+  resume_train: false
+
+# validation settings
+val:
+  val_freq: !!float 1e4
+  save_img: true
+
+# logging settings
+logger:
+  print_freq: 200
+  save_checkpoint: true
+  use_tb_logger: false
+  wandb:
+    project: ~
+    resume_id: ~
+
+# dist training settings
+dist_params:
+  backend: nccl
+  port: 29500
