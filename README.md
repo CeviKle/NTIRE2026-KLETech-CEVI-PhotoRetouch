@@ -31,6 +31,6 @@ Download the pretrained weights from [google drive](https://drive.google.com/dri
 ## To run the code
 ```bash
 chmod +x run_all_samples.sh
-./run_all_samples.sh
+./train_data.sh
 ```
 Change the folder path in run_all_samples.sh file
