@@ -3,6 +3,7 @@
 ```bash
 conda create -n inretouch python=3.10 -y
 conda activate inretouch
+python --version
 ```
 ## 2. Clone the Repository
 ```bash
@@ -11,19 +12,19 @@ cd NTIRE2026-KLETech-CEVI-PhotoRetouch
 ```
 ## 3. Install PyTorch with CUDA 12.8
 ```bash
-pip install torch==2.10.0 torchvision==0.25.0+cu128 torchaudio -f https://download.pytorch.org/whl/torch_stable.html
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
 ```
 ## 4. Install Other Dependencies
 ```bash
 pip install -r requirements.txt
 ```
-## 5. Verify Installation (Optional)
+## 5. Install kornia
+```bash
+pip install kornia
+```
+## 6. Verify Installation (Optional)
 ```bash
 python -c "import torch; print(torch.__version__); print(torch.cuda.is_available())"
-```
-## 6. Install basicsr
-```bash
-python setup.py develop --no_cuda_ext
 ```
 
 Download the pretrained weights from [google drive](https://drive.google.com/drive/folders/1RmpdphmhG3GT9ZCPmBnzWCzNnD9Kxlaq?usp=drive_link) and put it in '**models**' folder
