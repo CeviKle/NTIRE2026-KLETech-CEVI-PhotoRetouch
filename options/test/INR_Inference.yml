@@ -10,42 +10,45 @@ datasets:
     name: Single_Test
     type: INRInferenceDataset
     inp_natural: "example_data/Inference_Data"
-    inp_gt: "example_data/GT" # optional, uncomment for metrics calculation
+    inp_gt: null # optional, uncomment for metrics calculation
     io_backend:
       type: disk
 
 network_g:
   type: CNNDWSplitSiren
+
   n_input_p: 2
   n_input_s: 3
   n_output_dims: 3
   sin_w: 1
-  n_neurons: 64
-  n_hidden_p: 1
-  n_hidden_s: 1
-  n_hidden_m: 1
+
+  # Balanced capacity (stronger than baseline, runtime-safe)
+  n_neurons: 96
+  n_hidden_p: 2
+  n_hidden_s: 2
+  n_hidden_m: 2
   use_skip: true
 
 
 # path
 path:
-  pretrain_network_g: experiments/InRetouch/models/INR_Preset_1001.pth
-  strict_load_g: true
+  pretrain_network_g: D:/saakshi/NTIRE2026-KLETech-CEVI-PhotoRetouch/models/Sample10_Preset_5001.pth
+  strict_load_g: false
   resume_state: ~
 
 # validation settings
 val:
   save_img: true
 
-  metrics:  # optional, uncomment for metrics calculation
-    psnr: # metric name, can be arbitrary
-      type: calculate_psnr
-      crop_border: 0
-      test_y_channel: false
-    ssim:
-      type: calculate_ssim
-      crop_border: 0
-      test_y_channel: false
+  # metrics:  # optional, uncomment for metrics calculation
+  #   psnr: # metric name, can be arbitrary
+  #     type: calculate_psnr
+  #     crop_border: 0
+  #     test_y_channel: false
+  #   ssim:
+  #     type: calculate_ssim
+  #     crop_border: 0
+  #     test_y_channel: false
 
 # dist training settings
 dist_params:
