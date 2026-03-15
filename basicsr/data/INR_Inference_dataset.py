@@ -59,7 +59,8 @@ class INRInferenceDataset(data.Dataset):
             img_natural = cv2.resize(img_natural, (self.input_size, self.input_size), interpolation= cv2.INTER_LINEAR)
         
 
-        gt_path = self.input_gt
+        # gt_path = self.input_gt
+        gt_path = self.input_gt if hasattr(self, 'input_gt') and self.input_gt is not None else None
         if gt_path is not None:
             gt_path = gt_path + '/' + img_fi
         
