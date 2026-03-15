@@ -2,7 +2,7 @@
 
 BASE_YAML="options/train/InRetouch_Optimize_Single2.yml"
 TEMP_YAML="options/train/temp.yml"
-
+#change this path
 DATA_ROOT="/NTIRE2026/C11_RetouchTransfer/testing_data/Subjective_Evaluation_Data"
 
 for SAMPLE_DIR in $DATA_ROOT/sample*; do
