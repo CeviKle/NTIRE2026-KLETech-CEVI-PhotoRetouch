@@ -29,7 +29,7 @@ python -c "import torch; print(torch.__version__); print(torch.cuda.is_available
 
 Download the pretrained weights from [google drive](https://drive.google.com/drive/folders/1RmpdphmhG3GT9ZCPmBnzWCzNnD9Kxlaq?usp=drive_link) and put it in '**models**' folder
 
-## Train
+## Training the dataset
 
 ### Dataset structure
 ```
@@ -54,8 +54,18 @@ Download the pretrained weights from [google drive](https://drive.google.com/dri
 ```
 
 ### Run this code
+In linux
 ```bash
 chmod +x run_all_samples.sh
 ./train_data.sh
 ```
+In Windows
+```bash
+.\train_data.ps1
+```
 Change the folder path in train_data.sh file (In train_data.sh file DATA_ROOT = "ADD YOUR PATH HERE")
+
+## Testing the data
+```bash
+python -m basicsr.test -opt options/test/INR_Inference.yml
+```
