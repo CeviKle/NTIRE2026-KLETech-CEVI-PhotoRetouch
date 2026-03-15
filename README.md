@@ -21,3 +21,9 @@ pip install -r requirements.txt
 ```bash
 python -c "import torch; print(torch.__version__); print(torch.cuda.is_available())"
 ```
+## 6. Install basicsr
+```bash
+python setup.py develop --no_cuda_ext
+```
+
+## Download pretrained weights from This Google Drive and place under 'models' folder
