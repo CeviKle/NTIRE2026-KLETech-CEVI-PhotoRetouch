@@ -26,4 +26,4 @@ python -c "import torch; print(torch.__version__); print(torch.cuda.is_available
 python setup.py develop --no_cuda_ext
 ```
 
-## Download pretrained weights from This Google Drive and place under 'models' folder
+Download the pretrained weights from [google drive](https://drive.google.com/drive/folders/1RmpdphmhG3GT9ZCPmBnzWCzNnD9Kxlaq?usp=drive_link) and put it in '**models**' folder
