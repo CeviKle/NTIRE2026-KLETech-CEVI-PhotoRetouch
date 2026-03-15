@@ -27,3 +27,10 @@ python setup.py develop --no_cuda_ext
 ```
 
 Download the pretrained weights from [google drive](https://drive.google.com/drive/folders/1RmpdphmhG3GT9ZCPmBnzWCzNnD9Kxlaq?usp=drive_link) and put it in '**models**' folder
+
+## To run the code
+```bash
+chmod +x run_all_samples.sh
+./run_all_samples.sh
+```
+#change the path in run_all_samples.sh file in the main directory
